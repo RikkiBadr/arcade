@@ -77,12 +77,51 @@
 <header>
   <div class="top">
     <div class="brand"><div class="logo"></div><h1>CREATOR ARCADE</h1></div>
-    <div class="nav">
-      <a class="chip" id="hello">Guest</a>
-      <a class="chip" id="toLeaderboardsBtn">Leaderboards</a>
-      <button class="btn" id="signinBtn">Sign in</button>
-      <button class="btn btn-primary" id="signupBtn">Sign up</button>
+<div class="nav">
+  <a class="chip" id="hello">Guest</a>
+  <a class="chip" id="toLeaderboardsBtn">Leaderboards</a>
+  <a class="chip" id="toTreasuryBtn">Treasury</a>
+  <button class="btn" id="signinBtn">Sign in</button>
+  <button class="btn btn-primary" id="signupBtn">Sign up</button>
+  <!-- TREASURY (Coming Soon) -->
+<section class="panel" id="treasury">
+  <div class="treasury-card">
+    <div class="treasury-icon" aria-hidden="true">
+      <!-- Simple treasure/box SVG -->
+      <svg viewBox="0 0 128 128" width="84" height="84">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"  stop-color="#ffd45a"/>
+            <stop offset="100%" stop-color="#ff8a57"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#ff57de"/>
+            <stop offset="100%" stop-color="#7c67ff"/>
+          </linearGradient>
+        </defs>
+        <!-- Lid -->
+        <rect x="12" y="28" width="104" height="26" rx="6" fill="url(#g2)" opacity="0.95"/>
+        <!-- Box -->
+        <rect x="16" y="48" width="96" height="62" rx="10" fill="url(#g1)" />
+        <!-- Lock -->
+        <rect x="58" y="60" width="12" height="18" rx="3" fill="#0b0f14" opacity="0.9"/>
+        <circle cx="64" cy="76" r="5" fill="#0b0f14"/>
+      </svg>
     </div>
+
+    <div>
+      <h3 style="margin:0 0 6px">Treasury — Lock & Earn</h3>
+      <p class="muted" style="margin:6px 0 10px">
+        Soon you’ll be able to <strong>lock your winnings for 7 days</strong> to earn a bonus.  
+        The longer you play and lock, the bigger your boost. Early-unlock fees help fund rewards.
+      </p>
+      <div class="soon-pill">Coming soon</div>
+    </div>
+  </div>
+</section>
+
+</div>
+    
   </div>
 </header>
 
