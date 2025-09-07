@@ -133,6 +133,21 @@
 <div class="notice">🎮 <strong>Sign in</strong> to save your scores and compete on leaderboards!</div>
 
 <div class="wrap">
+  <!-- PAY WITH PHANTOM -->
+<section class="panel" id="pay">
+  <h3 style="margin:0 0 10px">Send SOL to Play / Support</h3>
+  <div class="controls" style="gap:12px">
+    <label>Your Phantom address (treasury)</label>
+    <input id="treasuryAddress" value="BYThp41FMgJRdQkWZk3iqU54LCm4azTVxfR91gzMMArt" style="min-width:340px"/>
+    <label>Amount (SOL)</label>
+    <input id="amountSol" type="number" step="0.000000001" placeholder="0.05" style="max-width:160px"/>
+    <button id="phantomPayBtn" class="btn btn-primary">Pay with Phantom</button>
+  </div>
+  <p class="muted" style="margin-top:10px">
+    You’ll be asked to approve the transaction in Phantom. Funds go straight to the treasury address.
+  </p>
+</section>
+
   <h3 class="section-title">Games</h3>
 
   <!-- GAME CARDS (images related to each game) -->
@@ -455,5 +470,63 @@
   (function(){ ctx.fillStyle='#071120'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.fillStyle='#eaf6ff'; ctx.font='28px ui-monospace,Menlo,monospace'; ctx.fillText('Choose a card to start playing', 260, canvas.height/2); })();
 })();
 </script>
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script>
+(() => {
+  const { Connection, SystemProgram, Transaction, PublicKey } = solanaWeb3;
+  // Mainnet RPC (use devnet if you want to test: 'https://api.devnet.solana.com')
+  const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+
+  const btn = document.getElementById('phantomPayBtn');
+  const amt = document.getElementById('amountSol');
+  const tre = document.getElementById('treasuryAddress');
+
+  btn?.addEventListener('click', async () => {
+    try {
+      if (!window.solana || !window.solana.isPhantom) {
+        return alert('Please install Phantom wallet.');
+      }
+      // Connect wallet (prompts user)
+      const res = await window.solana.connect();
+      const fromPubkey = res.publicKey;
+      const to = tre.value.trim();
+
+      if (!to) return alert('Enter your treasury address.');
+      const toPubkey = new PublicKey(to);
+
+      const amount = Number(amt.value);
+      if (!amount || amount <= 0) return alert('Enter a valid amount in SOL.');
+
+      const lamports = Math.round(amount * 1e9);
+
+      // Build a simple SOL transfer
+      const tx = new Transaction().add(SystemProgram.transfer({
+        fromPubkey,
+        toPubkey,
+        lamports
+      }));
+
+      const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = fromPubkey;
+
+      // User signs in Phantom
+      const signed = await window.solana.signTransaction(tx);
+
+      // Send + confirm
+      const sig = await connection.sendRawTransaction(signed.serialize());
+      await connection.confirmTransaction({ signature: sig, blockhash, lastValidBlockHeight }, 'confirmed');
+
+      alert('Payment sent!\\nSignature: ' + sig);
+      // Optional: show a link to a Solana explorer
+      // window.open(`https://explorer.solana.com/tx/${sig}?cluster=mainnet-beta`, '_blank');
+    } catch (e) {
+      console.error(e);
+      alert('Payment failed: ' + (e?.message || e));
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
