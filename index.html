@@ -1,1 +1,82 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Creator Arcade • Play • Compete • Earn</title>
+<meta name="description" content="Neon arcade with sign-in, 4 canvas games (Flappy, Snake, 2048, Tetris), local leaderboard, Treasury (coming soon), and Phantom pay button."/>
+<style>
+  body{font-family:Arial, sans-serif; margin:0; background:#0b0f14; color:#eef5ff;}
+  header{padding:10px; background:#11182a; display:flex; justify-content:space-between; align-items:center;}
+  .logo{width:34px; height:34px; background:#ff57de; border-radius:8px; margin-right:10px;}
+  .brand{display:flex; align-items:center; gap:10px;}
+  .nav{display:flex; gap:10px;}
+  .btn{padding:8px 12px; border-radius:8px; border:1px solid #444; background:#121a31; color:#fff; cursor:pointer;}
+  .btn-primary{background:#232a5a;}
+  .chip{padding:6px 10px; background:#0f1628; border-radius:999px; font-size:12px; border:1px solid #444;}
+  .wrap{padding:20px;}
+  .games-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;}
+  .card{background:#0f1421; border:1px solid #333; border-radius:12px; overflow:hidden;}
+  .thumb{aspect-ratio:16/9; background:#222; display:flex; align-items:center; justify-content:center; position:relative;}
+  .title-overlay{position:absolute; bottom:6px; left:6px; background:rgba(0,0,0,.6); padding:4px 8px; border-radius:6px;}
+  .body{padding:10px; color:#9aa8bc;}
+  footer{text-align:center; margin:30px 0; font-size:13px; color:#9aa8bc;}
+  footer a{display:inline-flex; align-items:center; gap:6px; margin-top:8px; padding:6px 12px; border-radius:8px; background:#0f1628; border:1px solid #333; text-decoration:none; color:#cfe3ff;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo"></div><h1>CREATOR ARCADE</h1></div>
+  <div class="nav">
+    <a class="chip" id="hello">Guest</a>
+    <a class="chip" href="#lbArea">Leaderboards</a>
+    <a class="chip" href="#treasury">Treasury</a>
+    <button class="btn" id="signinBtn">Sign in</button>
+    <button class="btn btn-primary" id="signupBtn">Sign up</button>
+  </div>
+</header>
+<div class="wrap">
+  <h2>Games</h2>
+  <div class="games-grid">
+    <div class="card"><div class="thumb"><div class="title-overlay">Flappy Bird</div></div><div class="body">Navigate through pipes</div></div>
+    <div class="card"><div class="thumb"><div class="title-overlay">Snake</div></div><div class="body">Eat food, grow longer</div></div>
+    <div class="card"><div class="thumb"><div class="title-overlay">2048</div></div><div class="body">Slide tiles to reach 2048</div></div>
+    <div class="card"><div class="thumb"><div class="title-overlay">Tetris</div></div><div class="body">Stack falling blocks</div></div>
+  </div>
+  <section id="treasury" style="margin-top:40px; padding:20px; border:1px solid #333; border-radius:12px; background:#11182a;">
+    <h3>Treasury — Lock & Earn</h3>
+    <p>Soon you’ll be able to lock your winnings for 7 days to earn a bonus. Coming soon!</p>
+  </section>
+  <section id="pay" style="margin-top:30px; padding:20px; border:1px solid #333; border-radius:12px; background:#11182a;">
+    <h3>Send SOL to Play / Support</h3>
+    <label>Your Phantom address</label><br/>
+    <input id="treasuryAddress" value="REPLACE_WITH_YOUR_WALLET" style="width:100%; margin:6px 0;"/><br/>
+    <label>Amount (SOL)</label><br/>
+    <input id="amountSol" type="number" step="0.000000001" placeholder="0.05" style="width:100%; margin:6px 0;"/><br/>
+    <button id="phantomPayBtn" class="btn btn-primary">Pay with Phantom</button>
+  </section>
+</div>
+<footer>
+  <p>Built with ❤️ for the Solana community • <strong>Compete, Earn, Repeat</strong></p>
+  <a href="https://t.me/CryptoArcade2025" target="_blank" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="18" height="18" fill="#29a9eb"><circle cx="120" cy="120" r="120" fill="#29a9eb"/><path fill="#fff" d="M174 66L48 116c-9 3-9 9-2 12l30 9 12 37c1 4 2 5 6 3l17-14 34 25c6 3 10 1 11-5l20-97c2-8-3-12-9-9z"/></svg>
+    Join us on Telegram
+  </a>
+</footer>
+<script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
+<script>
+document.getElementById('phantomPayBtn').onclick = async () => {
+  const connection = new solanaWeb3.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+  if (!window.solana || !window.solana.isPhantom) return alert('Phantom not found');
+  const res = await window.solana.connect(); const from = res.publicKey;
+  const to = new solanaWeb3.PublicKey(document.getElementById('treasuryAddress').value.trim());
+  const lamports = Math.round(Number(document.getElementById('amountSol').value)*1e9);
+  const tx = new solanaWeb3.Transaction().add(solanaWeb3.SystemProgram.transfer({fromPubkey:from,toPubkey:to,lamports}));
+  const {blockhash,lastValidBlockHeight}=await connection.getLatestBlockhash(); tx.recentBlockhash=blockhash; tx.feePayer=from;
+  const signed = await window.solana.signTransaction(tx);
+  const sig = await connection.sendRawTransaction(signed.serialize()); await connection.confirmTransaction({signature:sig,blockhash,lastValidBlockHeight},'confirmed');
+  alert('Payment sent! Signature: '+sig);
+};
+</script>
+</body>
+</html>
