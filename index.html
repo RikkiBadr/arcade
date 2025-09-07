@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CreatorGames‑style Arcade</title>
+  <meta name="description" content="Free arcade site with Snake & Flappy. Deploy on GitHub Pages/Netlify/Vercel."/>
+  <style>
+    body { background:#0b0f16; color:#fff; font-family:sans-serif; text-align:center; }
+    h1 { color:#4df3ff; margin-top:40px; }
+    canvas { border:2px solid #4df3ff; border-radius:10px; margin:20px auto; display:block; }
+  </style>
+</head>
+<body>
+  <h1>CreatorGames‑style Arcade</h1>
+  <p>Press arrows for Snake, Space for Flappy</p>
+  <canvas id="canvas" width="640" height="480"></canvas>
+  <script>
+    const canvas=document.getElementById("canvas"),ctx=canvas.getContext("2d");
+    let x=10,y=10,dx=20,dy=0,snake=[{x:10,y:10}],food={x:15,y:15},size=20;
+    function draw(){
+      ctx.fillStyle="#0b0f16";ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle="#9dff4d";ctx.fillRect(food.x*size,food.y*size,size-2,size-2);
+      ctx.fillStyle="#4df3ff";snake.forEach(p=>ctx.fillRect(p.x*size,p.y*size,size-2,size-2));
+    }
+    function update(){
+      x+=dx/20; y+=dy/20;
+      if(x<0) x=canvas.width/size-1; if(y<0) y=canvas.height/size-1;
+      if(x>=canvas.width/size) x=0; if(y>=canvas.height/size) y=0;
+      snake.unshift({x,y}); if(x===food.x&&y===food.y){food={x:Math.floor(Math.random()*30),y:Math.floor(Math.random()*24)};} else snake.pop();
+    }
+    function loop(){update();draw();setTimeout(loop,120);}
+    document.addEventListener("keydown",e=>{if(e.key==="ArrowUp"&&dy===0){dx=0;dy=-20;}
+    if(e.key==="ArrowDown"&&dy===0){dx=0;dy=20;}
+    if(e.key==="ArrowLeft"&&dx===0){dx=-20;dy=0;}
+    if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0;}});
+    loop();
+  </script>
+</body>
+</html>
