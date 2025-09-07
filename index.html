@@ -170,54 +170,69 @@
     </article>
 
     <article class="card">
-      <div class="thumb">
-        <!-- Snake grid vibe -->
-        <img src="https://images.unsplash.com/photo-1553532435-93d56c1f4f53?q=80&w=1600&auto=format&fit=crop" alt="Snake">
-        <div class="title-overlay">Snake</div>
-      </div>
-      <div class="body">Guide the snake, eat food, grow longer. Don’t bite yourself!</div>
-      <div class="stats">
-        <div class="stat"><span>High Score</span><strong id="ssnake">—</strong></div>
-        <div class="stat"><span>Times Played</span><strong id="psnake">—</strong></div>
-      </div>
-      <div class="actions">
-        <button class="btn btn-primary" data-play="snake">Play</button>
-        <button class="btn" data-leader="snake">Leaderboard</button>
-      </div>
+<div class="thumb">
+  <svg viewBox="0 0 160 90" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="flbg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#152241"/>
+        <stop offset="100%" stop-color="#0a111f"/>
+      </linearGradient>
+    </defs>
+    <rect width="160" height="90" fill="url(#flbg)"/>
+    <!-- pipes -->
+    <rect x="60" y="0"   width="14" height="36" fill="#ff57de"/>
+    <rect x="60" y="56"  width="14" height="34" fill="#ff57de"/>
+    <rect x="110" y="0"  width="14" height="26" fill="#ff57de"/>
+    <rect x="110" y="46" width="14" height="44" fill="#ff57de"/>
+    <!-- bird -->
+    <circle cx="34" cy="45" r="7" fill="#57ffd3"/>
+  </svg>
+  <div class="title-overlay">Flappy Bird</div>
+</div>
+
+    </article>
+
+    <article class="card">
+<div class="thumb">
+  <svg viewBox="0 0 160 90" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+    <rect width="160" height="90" fill="#0e1631"/>
+    <!-- tiles -->
+    <rect x="34" y="20" width="24" height="24" rx="4" fill="#57ffd3"/>
+    <rect x="62" y="20" width="24" height="24" rx="4" fill="#ff57de"/>
+    <rect x="90" y="20" width="24" height="24" rx="4" fill="#ffd45a"/>
+    <rect x="62" y="48" width="24" height="24" rx="4" fill="#57ffd3"/>
+    <text x="46" y="36" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle" fill="#061018">2</text>
+    <text x="74" y="36" font-size="12" text-anchor="middle" fill="#061018">4</text>
+    <text x="102" y="36" font-size="12" text-anchor="middle" fill="#061018">8</text>
+    <text x="74" y="64" font-size="12" text-anchor="middle" fill="#061018">2</text>
+  </svg>
+  <div class="title-overlay">2048</div>
+</div>
+
     </article>
 
     <article class="card">
       <div class="thumb">
-        <!-- 2048 numbers -->
-        <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop" alt="2048">
-        <div class="title-overlay">2048</div>
-      </div>
-      <div class="body">Slide tiles to combine numbers and reach 2048.</div>
-      <div class="stats">
-        <div class="stat"><span>High Score</span><strong id="s2048">—</strong></div>
-        <div class="stat"><span>Times Played</span><strong id="p2048">—</strong></div>
-      </div>
-      <div class="actions">
-        <button class="btn btn-primary" data-play="2048">Play</button>
-        <button class="btn" data-leader="2048">Leaderboard</button>
-      </div>
-    </article>
+<div class="thumb">
+  <svg viewBox="0 0 160 90" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+    <rect width="160" height="90" fill="#0c1328"/>
+    <!-- stack -->
+    <rect x="24" y="66" width="16" height="16" fill="#57ffd3"/>
+    <rect x="40" y="66" width="16" height="16" fill="#57ffd3"/>
+    <rect x="56" y="66" width="16" height="16" fill="#57ffd3"/>
+    <rect x="72" y="66" width="16" height="16" fill="#57ffd3"/>
+    <rect x="40" y="50" width="16" height="16" fill="#ffd45a"/>
+    <rect x="56" y="50" width="16" height="16" fill="#ffd45a"/>
+    <rect x="56" y="34" width="16" height="16" fill="#ff57de"/>
+    <rect x="72" y="50" width="16" height="16" fill="#ffd45a"/>
+    <!-- active piece -->
+    <rect x="104" y="18" width="16" height="16" fill="#a857ff"/>
+    <rect x="104" y="34" width="16" height="16" fill="#a857ff"/>
+    <rect x="120" y="34" width="16" height="16" fill="#a857ff"/>
+  </svg>
+  <div class="title-overlay">Tetris</div>
+</div>
 
-    <article class="card">
-      <div class="thumb">
-        <!-- Tetris blocks -->
-        <img src="https://images.unsplash.com/photo-1596495578065-9c3b9b4b8a87?q=80&w=1600&auto=format&fit=crop" alt="Tetris">
-        <div class="title-overlay">Tetris</div>
-      </div>
-      <div class="body">Stack falling tetrominoes. Clear lines for points.</div>
-      <div class="stats">
-        <div class="stat"><span>High Score</span><strong id="stetris">—</strong></div>
-        <div class="stat"><span>Times Played</span><strong id="ptetris">—</strong></div>
-      </div>
-      <div class="actions">
-        <button class="btn btn-primary" data-play="tetris">Play</button>
-        <button class="btn" data-leader="tetris">Leaderboard</button>
-      </div>
     </article>
   </div>
 
